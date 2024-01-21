@@ -18,7 +18,6 @@ RUN set -ex && \
 COPY crowdfunding/ /code/
 
 ENV SECRET_KEY "sZscBXonnu5TIHQLlRgpXJLNe45hHMkUTL6sZkQF3PrkPhofJP"
-RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
 RUN chmod +x /code/run.sh
 
