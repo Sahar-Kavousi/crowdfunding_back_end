@@ -8,6 +8,7 @@ class Project(models.Model):
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
+    is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField()
     owner = models.ForeignKey(
         get_user_model(),

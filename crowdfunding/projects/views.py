@@ -11,7 +11,7 @@ class ProjectList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
-        projects = Project.objects.all()
+        projects = Project.objects.filter(is_deleted=False)
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
