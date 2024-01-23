@@ -64,14 +64,9 @@ Token Feature
 ![]( {{ ./relative/path/to/your/schema/image.png }} )
 
 ### API Spec
-{{ Fill out the table below to define your endpoints. An example of what thismight look like is shown at the bottom of the page.
-
-It might look messy here in the PDF, but once it's rendered it looks very neat!
-
-It can be helpful to keep the markdown preview open in VS Code so that you cansee what you're typing more easily. }}
-
-
-| URL | HTTP Method | Purpose | Purpose | Request Body | Success Response Code |Authentication/Authorisation || --- | ----------- | ------- | ------- | ------------ | --------------------- |---------------------------- ||     |             |         |         |              |                       ||
+| URL | HTTP Method | Purpose | Authentication/ Authorisation  | Implemented Yet |
+| /projects/ | POST | Project object (without id or date_created)| Must be logged in | YES|
+|     |             |         |         |              |                       ||
 
 
 ### DB Schema
