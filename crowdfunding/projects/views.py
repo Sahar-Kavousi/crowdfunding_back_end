@@ -3,18 +3,19 @@ from rest_framework.response import Response
 from .models import Pledge, Project
 from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
 from django.http import Http404
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from .permissions import IsOwnerOrReadOnly
 
 
 class ProjectList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
+#gets-all-the-projects
     def get(self, request):
-        projects = Project.objects.filter(is_deleted=False)
+        projects = Project.objects.filter(is_deleted=False, is_open=True)
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
+#creates-a-new--project
     def post(self, request):
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
@@ -29,7 +30,7 @@ class ProjectList(APIView):
         )
 
 
-class ProjectDetail(APIView):
+class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
@@ -37,17 +38,18 @@ class ProjectDetail(APIView):
 
     def get_object(self, pk):
         try:
-            project = Project.objects.get(pk=pk)
+            project = Project.objects.get(pk=pk, is_deleted=False)
             self.check_object_permissions(self.request, project)
             return project
         except Project.DoesNotExist:
             raise Http404
-
+        
     def get(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(project)
         return Response(serializer.data)
-
+    
+    #update-method-for-projects
     def put(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(
@@ -59,6 +61,21 @@ class ProjectDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    #delete-method-for-projects
+    def destroy(self, request, pk):
+
+        instance = self.get_object(pk)
+
+        # Check if the object is already deleted
+        if instance.is_deleted:
+            return Response({'detail': 'Object is already deleted.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Perform-the-soft-delete
+        instance.is_deleted = True
+        instance.save(update_fields=['is_deleted'])
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PledgeList(APIView):
@@ -66,7 +83,7 @@ class PledgeList(APIView):
     def get_project(pk):
         project = Project.objects.get(pk=pk)
         return project
-    
+
     def get(self, request):
         pledges = Pledge.objects.all()
         serializer = PledgeSerializer(pledges, many=True)
@@ -79,7 +96,7 @@ class PledgeList(APIView):
             project_id = request.data.get('project')
             project = Project.objects.get(pk=project_id)
 
-            serializer.save(supporter=request.user,project= project)
+            serializer.save(supporter=request.user, project=project)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED

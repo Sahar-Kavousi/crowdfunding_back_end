@@ -22,10 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-m+)!$i*lqp6%qr+qtxr-vkk9@zvo49y(5fh!*u$wre5xp6(ol$'
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY',
-        '5*15pt5log&-bjpkqo0117!b!x4do-mgmxvg8n$3016384zz(7'
-)
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','5*15pt5log&-bjpkqo0117!b!x4do-mgmxvg8n$3016384zz(7')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get(
     'DJANGO_DEBUG',
@@ -34,7 +31,6 @@ DEBUG = os.environ.get(
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-#ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
