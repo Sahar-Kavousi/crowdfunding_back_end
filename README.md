@@ -21,31 +21,31 @@ Cooking and Nutrition Enthusiasts: Passionate about healthy eating and kitchen i
 Fitness Gamers and VR Fans: Gamers and tech enthusiasts interested in interactive fitness experiences.
 
 ### Front End Pages/Functionality
-- Home page:
+Home page:
 - Navigation bar
 - Login form
 - Categories to help users navigate.
 - Overview of featured and popular projects.
 
-- Project Listing Page:
+Project Listing Page:
 - Displays a grid or list of projects.
 - Project cards with images, titles, brief descriptions, and funding progress.
 
-- Project Details Page:
+Project Details Page:
 - In-depth information about a specific project.
 - Project description, goals, and timeline.
 - Funding progress bar.
 - Options to share on social media.
 - List of supporters and their contributions.
 
-- User Registration and Login:
+User Registration and Login:
 - Registration and login forms.
 
-- Create Project Page:
+Create Project Page:
 - Form for project creators to submit their project details.
 - Fields for project Title, name, goal amount, status, description and date created.
 - Upload images and videos to showcase the project.
-- Pledge form:
+  Pledge form:
 - A form that will allow a logged in user to support a project.
 - Brief detail about the project being supported, comments, amount and the option for supporter to stay anonymous.
 
@@ -55,18 +55,31 @@ Fitness Gamers and VR Fans: Gamers and tech enthusiasts interested in interactiv
 ### Screenshots
 
 GET Method
-![]( {{ ./relative/path/to/your/schema/image.png }} )
+![](crowdfunding/projects/screenshots-insomnia/successful-get-method.png)
 
 POST Method
-![]( {{ ./relative/path/to/your/schema/image.png }} )
+![]( crowdfunding/projects/screenshots-insomnia/successful-post-method.png )
 
 Token Feature
-![]( {{ ./relative/path/to/your/schema/image.png }} )
+![]( crowdfunding/projects/screenshots-insomnia/token-being-returned.png )
 
 ### API Spec
-| URL | HTTP Method | Purpose | Authentication/ Authorisation  | Implemented Yet |
-| /projects/ | POST | Project object (without id or date_created)| Must be logged in | YES|
-|     |             |         |         |              |                       ||
+| URL | HTTP Method |  Purpose | Successful Response Code | Authentication/ Authorisation  |
+|-------------|------------------|------------------|------------------|--------------|
+| /projects/  | GET | List of Project objects  |----------- |  Is not required  
+| /projects/ |  POST |  Creates a new project		|----------- |  Must be logged in
+/projects/?| DELETE	| Deletes an single project	|---------|---------|-------------|
+| projects/1/  | GET | Returns the project with pledges id 1 |----------- | Is not required
+| projects/1/  | PUT | Updating the projects that has id 1 |----------- | Must be logged in and must be the project owner
+| /pledges/  | GET | List of Pledge objects  |-----------| Is not required
+| /pledges/ | POST  | Creates a new pledge  |-----------| Must be logged in
+| pledges/order_by=date_created | GET | List of Pledge objects in order of date created |----------- | Is not required
+/users/ | post  | Creates a new user	  |---------|-----------|-----------|
+/pledges/?| DELETE	| Deletes an single pledge	|---------|---------|-------------|
+
+
+
+
 
 
 ### DB Schema
