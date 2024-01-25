@@ -9,13 +9,14 @@ from .permissions import IsOwnerOrReadOnly
 
 class ProjectList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-#gets-all-the-projects
+    
+    #gets-all-the-projects
     def get(self, request):
         projects = Project.objects.filter(is_deleted=False, is_open=True)
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
-#creates-a-new--project
+    #creates-a-new--project
     def post(self, request):
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():

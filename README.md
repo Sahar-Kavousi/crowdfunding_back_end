@@ -133,16 +133,16 @@ Create a New Project:
 ### API Spec
 | URL | HTTP Method |  Purpose | Successful Response Code | Authentication/ Authorisation  |
 |-------------|------------------|------------------|------------------|--------------|
-| /projects/  | GET | List of Project objects  |----------- |  Is not required  
-| /projects/ |  POST |  Creates a new project		|----------- |  Must be logged in
-/projects/?| DELETE	| Deletes an single project	|---------|---------|-------------|
-| projects/1/  | GET | Returns the project with pledges id 1 |----------- | Is not required
-| projects/1/  | PUT | Updating the projects that has id 1 |----------- | Must be logged in and must be the project owner
-| /pledges/  | GET | List of Pledge objects  |-----------| Is not required
-| /pledges/ | POST  | Creates a new pledge  |-----------| Must be logged in
-| pledges/order_by=date_created | GET | List of Pledge objects in order of date created |----------- | Is not required
-/users/ | post  | Creates a new user	  |---------|-----------|-----------|
-/pledges/?| DELETE	| Deletes an single pledge	|---------|---------|-------------|
+| /projects/  | GET | List of Project objects  |  200 |  Is not required  
+| /project/ |  POST |  Creates a new project		| 201  |  Must be logged in
+/'project/<int:pk>/ | DELETE	| Deletes an single project	| 204  |  Must be logged in and must be the project owner |
+| project/1/  | GET | Returns the project with pledges id 1 | 200 | Is not required
+| project/1/  | PUT | Updating the projects that has id 1 | 200 | Must be logged in and must be the project owner
+| /pledges/  | GET | List of Pledge objects  |  200 | Is not required
+| /pledges/ | POST  | Creates a new pledge  | 201  | Must be logged in
+| /pledges/order_by=date_created | GET | List of Pledge objects in order of date created |----------- | Is not required
+|/users/ | post  | Creates a new user	  |---------|-----------|
+|/pledges/<int:pk>/| DELETE	| Deletes a single pledge	|---------|---------|
 
 
 
