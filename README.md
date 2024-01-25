@@ -140,7 +140,7 @@ Create a New Project:
 | project/1/  | PUT | Updating the projects that has id 1 | 200 | Must be logged in and must be the project owner
 | /pledges/  | GET | List of Pledge objects  |  200 | Is not required
 | /pledges/ | POST  | Creates a new pledge  | 201  | Must be logged in
-| /pledges/order_by=date_created | GET | List of Pledge objects in order of date created |----------- | Is not required
+| /pledges/order_by=date_created | GET | List of Pledge objects in order of date created |  200 | Is not required
 |/users/ | post  | Creates a new user	  |---------|-----------|
 |/pledges/<int:pk>/| DELETE	| Deletes a single pledge	|---------|---------|
 
