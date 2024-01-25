@@ -91,11 +91,12 @@ Receive Authentication Token:
 4. Choose JSON as the text option.
 5. Enter the following JSON attributes in the body:
 
+```json
 {
-    "username": "{enter the registered username}",
-    "password": "{enter the password}"
+  "username": "{enter the registered username}",
+  "password": "{enter the password}"
 }
-
+```
 1. Click Send to obtain the authentication token.
 
 Create a New Project:
@@ -107,7 +108,7 @@ Create a New Project:
 5. Choose "Bearer Token" from "Auth"
 6. Enter the token number of the user creating the project
 7. Enter the necessary data for creating a new project in the body:
-
+```json
 {
  "owner": "{id of owner}",
  "title": "{title}",
@@ -118,7 +119,7 @@ Create a New Project:
  "is_deleted": false or true
  "date_created": "{date}"
 }
-
+```
 1. Click Send to create a new project.
 
 
