@@ -63,6 +63,72 @@ POST Method
 Token Feature
 ![]( crowdfunding/projects/screenshots-insomnia/token-being-returned.png )
 
+### Instructions for how to register a new user and create a new project in Insomnia
+
+Register a New User:
+
+1. Open Insomnia and create a new HTTP request.
+2. Set the method to POST.
+3. Set the URL to: https://drf-patient-pond-1055.fly.dev/users/
+4. Choose JSON as the text option.
+5. Enter the following JSON attributes in the body:
+   
+{
+    "username": "{enter your username}",
+    "password": "{enter your password}",
+    "first_name": "{enter your first name}",
+    "last_name": "{enter your last name}",
+    "email": "{enter your email}"
+}
+
+1. Click Send to create a new user.
+ 
+Receive Authentication Token:
+
+1. Create another HTTP request.
+2. Set the method to POST.
+3. Set the URL to: https://drf-patient-pond-1055.fly.dev/api-token-auth/
+4. Choose JSON as the text option.
+5. Enter the following JSON attributes in the body:
+
+{
+    "username": "{enter the registered username}",
+    "password": "{enter the password}"
+}
+
+1. Click Send to obtain the authentication token.
+
+Create a New Project:
+
+1. Create another HTTP request.
+2. Set the method to POST.
+3. Set the URL to the endpoint for creating a new project: https://drf-patient-pond-1055.fly.dev/projects/
+4. Choose JSON as the text option.
+5. Choose "Bearer Token" from "Auth"
+6. Enter the token number of the user creating the project
+7. Enter the necessary data for creating a new project in the body:
+
+{
+ "owner": "{id of owner}",
+ "title": "{title}",
+ "description": "{A description}",
+ "goal": {Goal amount},
+ "image": "{url of image}",
+ "is_open": {false or true - is the project open for supporters},
+ "is_deleted": false or true
+ "date_created": "{date}"
+}
+
+1. Click Send to create a new project.
+
+
+
+
+
+
+
+
+
 ### API Spec
 | URL | HTTP Method |  Purpose | Successful Response Code | Authentication/ Authorisation  |
 |-------------|------------------|------------------|------------------|--------------|
