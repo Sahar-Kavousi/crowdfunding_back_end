@@ -1,23 +1,25 @@
+from django.shortcuts import render
+# Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Pledge, Project
+from .models import Project, Pledge
 from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
 from django.http import Http404
-from rest_framework import status, permissions, generics
-from .permissions import IsOwnerOrReadOnly
+from rest_framework import status, permissions
+from .permissions import IsOwnerOrReadOnlyProject, IsOwnerOrReadOnlyPledge
+from django.db.models import Sum
 
 
 class ProjectList(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
-    #gets-all-the-projects
-    def get(self, request):
-        projects = Project.objects.filter(is_deleted=False, is_open=True)
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnlyProject]
+
+    def get(self, request):  # gets all projects
+        projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
-    #creates-a-new--project
-    def post(self, request):
+    def post(self, request):  # creates a new project
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(owner=request.user)
@@ -31,26 +33,29 @@ class ProjectList(APIView):
         )
 
 
-class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
+class ProjectDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
+        IsOwnerOrReadOnlyProject
     ]
 
     def get_object(self, pk):
         try:
-            project = Project.objects.get(pk=pk, is_deleted=False)
+            project = Project.objects.get(pk=pk)
             self.check_object_permissions(self.request, project)
             return project
         except Project.DoesNotExist:
             raise Http404
-        
+
     def get(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(project)
-        return Response(serializer.data)
-    
-    #update-method-for-projects
+        # Getting the amount yet to be raised for a project
+        to_raise = serializer.amount_to_raise(project)
+        return Response({'project': serializer.data,
+                         'amount_to_raise': to_raise})
+
+    # Update method - Projects
     def put(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(
@@ -61,29 +66,21 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-    #delete-method-for-projects
-    def destroy(self, request, pk):
-
-        instance = self.get_object(pk)
-
-        # Check if the object is already deleted
-        if instance.is_deleted:
-            return Response({'detail': 'Object is already deleted.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Perform-the-soft-delete
-        instance.is_deleted = True
-        instance.save(update_fields=['is_deleted'])
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Delete method - Projects
+    def delete(self, request, pk):
+        project = self.get_object(pk)
+        project.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class PledgeList(APIView):
-
-    def get_project(pk):
-        project = Project.objects.get(pk=pk)
-        return project
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnlyPledge]
 
     def get(self, request):
         pledges = Pledge.objects.all()
@@ -93,16 +90,11 @@ class PledgeList(APIView):
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
-            # Use the project instance corresponding to the project ID in the request data
-            project_id = request.data.get('project')
-            project = Project.objects.get(pk=project_id)
-
-            serializer.save(supporter=request.user, project=project)
+            serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
             )
-
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
@@ -112,7 +104,7 @@ class PledgeList(APIView):
 class PledgeDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
+        IsOwnerOrReadOnlyPledge
     ]
 
     def get_object(self, pk):
@@ -128,14 +120,24 @@ class PledgeDetail(APIView):
         serializer = PledgeSerializer(pledge)
         return Response(serializer.data)
 
+    # Update method - Pledge
     def put(self, request, pk):
         pledge = self.get_object(pk)
         serializer = PledgeSerializer(
-            instance=Pledge,
+            instance=pledge,
             data=request.data,
             partial=True
         )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    # Delete method - Pledge
+
+    def delete(self, request, pk):
+        pledge = self.get_object(pk)
+        pledge.delete()
+        return Response(status=status.HTTP_200_OK)
