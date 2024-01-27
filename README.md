@@ -87,7 +87,7 @@ Register a New User:
     "email": "{enter your email}"
 }
 
-1. Click Send to create a new user.
+8. Click Send to create a new user.
  
 Receive Authentication Token:
 
