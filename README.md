@@ -11,14 +11,21 @@ This health and fitness crowdfunding site allows people to ask for sponsership f
 The intended audience for this health and fitness-related crowdfunding site may vary based on the specific product or project. However, in general, the target audience typically includes individuals who have an interest in maintaining a healthy lifestyle, improving their fitness, and exploring innovative health and wellness solutions. 
 Some example of the primary target audiences for this project :​
 
-Health and Fitness Enthusiasts: who are eager on maintaining a healthy lifestyle.​
-Technology Enthusiasts: Those interested in the latest health tech innovations.​
-Wellness Consumers: People prioritizing overall well-being.​
-Health Professionals: Healthcare, fitness, and nutrition experts seeking new tools.​
-Outdoor Enthusiasts: Those interested in outdoor fitness and adventure.​
-Mental Health Advocates: Individuals concerned about mental well-being.​
-Cooking and Nutrition Enthusiasts: Passionate about healthy eating and kitchen innovations.​
-Fitness Gamers and VR Fans: Gamers and tech enthusiasts interested in interactive fitness experiences.
+- Health and Fitness Enthusiasts: who are eager on maintaining a healthy lifestyle.​
+
+- Technology Enthusiasts: Those interested in the latest health tech innovations.​
+
+- Wellness Consumers: People prioritizing overall well-being.​
+
+- Health Professionals: Healthcare, fitness, and nutrition experts seeking new tools.​
+
+- Outdoor Enthusiasts: Those interested in outdoor fitness and adventure.​
+
+- Mental Health Advocates: Individuals concerned about mental well-being.​
+  
+- Cooking and Nutrition Enthusiasts: Passionate about healthy eating and kitchen innovations.
+​
+- Fitness Gamers and VR Fans: Gamers and tech enthusiasts interested in interactive fitness experiences.
 
 ### Front End Pages/Functionality
 Home page:
@@ -49,8 +56,7 @@ Create Project Page:
 - A form that will allow a logged in user to support a project.
 - Brief detail about the project being supported, comments, amount and the option for supporter to stay anonymous.
 
-- 404 Error Page:
-- Custom 404 error page for a better user experience.
+- 404 Error Page: Custom 404 error page for a better user experience.
 
 ### Screenshots
 
