@@ -55,7 +55,7 @@ class ProjectDetail(APIView):
         return Response({'project': serializer.data,
                          'amount_to_raise': to_raise})
 
-    # Update method - Projects
+    # Update-method-Projects
     def put(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(
@@ -71,7 +71,7 @@ class ProjectDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # Delete method - Projects
+    # Delete-method-Projects
     def delete(self, request, pk):
         project = self.get_object(pk)
         project.delete()
@@ -120,7 +120,7 @@ class PledgeDetail(APIView):
         serializer = PledgeSerializer(pledge)
         return Response(serializer.data)
 
-    # Update method - Pledge
+    # Update-method-Pledge
     def put(self, request, pk):
         pledge = self.get_object(pk)
         serializer = PledgeSerializer(
@@ -135,7 +135,7 @@ class PledgeDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    # Delete method - Pledge
+    # Delete-method-Pledge
 
     def delete(self, request, pk):
         pledge = self.get_object(pk)
