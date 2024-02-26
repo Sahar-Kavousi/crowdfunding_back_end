@@ -15,6 +15,7 @@ class Project(models.Model):
         related_name='owned_projects'
     )
 
+
 class Pledge(models.Model):
     amount = models.IntegerField()
     comment = models.CharField(max_length=200)
@@ -28,5 +29,4 @@ class Pledge(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
         related_name='supported_pledges'
-        )
-
+    )

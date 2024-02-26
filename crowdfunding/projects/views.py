@@ -14,8 +14,8 @@ class ProjectList(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnlyProject]
 
-    def get(self, request):  # gets all projects
-        projects = Project.objects.all()
+    def get(self, request):
+        projects = Project.objects.prefetch_related("pledges").all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
@@ -70,7 +70,7 @@ class ProjectDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    
+
     # Delete-method-Projects
     def delete(self, request, pk):
         project = self.get_object(pk)
@@ -135,6 +135,7 @@ class PledgeDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
     # Delete-method-Pledge
 
     def delete(self, request, pk):
