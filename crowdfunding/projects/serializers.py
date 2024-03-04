@@ -5,6 +5,10 @@ from django.db.models import Sum
 
 class PledgeSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.id')
+    # New field added to get the supporter's name
+    supporter_username = serializers.CharField(source='supporter.username', read_only=True)
+    supporter_firstname = serializers.CharField(source='supporter.first_name', read_only=True)
+    supporter_lastname = serializers.CharField(source='supporter.last_name', read_only=True)
 
     class Meta:
         model = Pledge
